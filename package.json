@@ -1,5 +1,5 @@
 {
-  "name": "ez-tools",
+  "name": "ezell-toolbelt",
   "version": "1.0.0",
   "description": "My personal toolbelt",
   "main": "lib/index.js",
