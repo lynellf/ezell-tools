@@ -13,36 +13,25 @@ Sure, there are better implementations available but, this toolbelt of mine is s
 ### What's in it?
 
 ```js
-import { Box } from 'ez-tools'
+import { Pipeline } from 'ezell-tools'
 
 const divide = (y: number) => (x: number) => y === 0 ? null : x / y
 const divideByTwo = divide(2)
 const divideByZero = divide(0)
 
-const five = Box(20).map(divideByTwo).map(divideByTwo).value // 5
+const five = Pipeline(20).map(divideByTwo).map(divideByTwo).value // 5
 
-const nothing = Box(20).flatMap(divideByTwo).flatMap(divideByZero).value // undefined
+const nothing = Pipeline(20).flatMap(divideByTwo).flatMap(divideByZero).value // undefined
 ```
 
-### What's the difference between Map and FlatMap methods?
-
-`flatMap` will assume everything is an `Option` type, meaning its contents may be `null` or `undefined`
-When a `null` or `undefined` `value` is found, the method chain will branch off and return a `None` type.
-
 Nested `Some` types are unwrapped.
-
-`map` will not make this assumption, and methods will chain without performing any optional value check, always returning a `Some` type.
-
-In short, when it comes to working with plain functions, and its output can be trusted, `map` is good enough.
-
-If the output of the function could be `null` or `undefined`, `flatMap` is preferred when chaining methods.
 
 ### Where would one want to use an Option type?
 
 Many places? Object / dictionary / array lookups can be unsafe. Virtually anywhere one may expect a mixed value of `null | undefined | value`
 
 ```js
-import { Option } from 'ez-tools'
+import { Option } from 'ezell-tools'
 
 const divide = (y) => (x) => Option(y === 0 ? null : x / y)
 const divideByFour = divide(4)
@@ -51,7 +40,7 @@ const six = divideByFour(20).map((x) => x + 1).value // 6
 ```
 
 ```js
-import { Option } from 'ez-tools'
+import { Option } from 'ezell-tools'
 
 const contacts = new Map([
   ['John', 'jd@jd.com'],
@@ -72,3 +61,24 @@ getValue('Ezell')
 ### Why not use optional chaining and nullish coalescing?
 
 The goal is to abstract away this decision making altogether. One simply works with their data through a pipeline, and the pipeline will branch accordingly if theres a nullish value detected.
+
+# API
+
+`Some` / `None` / `Option` `Pipeline`
+
+```js
+import { Some, None, Option } from 'ezell-tools'
+```
+
+Each function, `Some`, `None`, `Pipeline`, and `Option` return objects sharing the same interface.
+
+```typescript
+interface Pipeline<T> {
+  type: 'Some' | 'None'
+  value: T
+  map: <U>(fn: (x: T) => U) => Pipeline<U>
+  tap: (fn: (x: T) => void) => Pipeline<T>
+}
+```
+
+`Pipeline` is an alias for `Some`
