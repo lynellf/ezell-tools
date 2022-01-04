@@ -1,7 +1,7 @@
-import { Some } from './some'
-export function tap<T>(x: NonNullable<T>) {
+import { Option } from './option'
+export function tap<T>(x: T) {
   return (f: (x: T) => void) => {
     f(x)
-    return Some(x)
+    return Option(x)
   }
 }

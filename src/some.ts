@@ -1,11 +1,10 @@
 import { map } from './map'
 import { tap } from './tap'
-import { flatMap } from './flatmap'
-import type { Some as TSome } from './types'
+import type { Pipeline } from './types'
 
-function unwrap<T>(x: NonNullable<T> | TSome<NonNullable<T>>): NonNullable<T> {
-  const isSome = (x as TSome<NonNullable<T>>)?.type === 'Some'
-  const value = (x as TSome<NonNullable<T>>)?.value
+function unwrap<T>(x: T | Pipeline<NonNullable<T>>): NonNullable<T> {
+  const isSome = (x as Pipeline<NonNullable<T>>)?.type === 'Some'
+  const value = (x as Pipeline<NonNullable<T>>)?.value
   const hasValue = value !== undefined
 
   if (!isSome) return x as NonNullable<T>
@@ -14,14 +13,13 @@ function unwrap<T>(x: NonNullable<T> | TSome<NonNullable<T>>): NonNullable<T> {
   return hasValue ? value : unwrap(x)
 }
 
-export function Some<T>(x: NonNullable<T>): TSome<T> {
+export function Some<T>(x: T): Pipeline<T> {
   return {
     type: 'Some',
-    map: map(x),
-    flatMap: flatMap(x),
-    tap: tap(x),
+    map: map(x as NonNullable<T>),
+    tap: tap(x as NonNullable<T>),
     get value() {
-      return unwrap(x)
+      return unwrap(x as NonNullable<T>)
     }
   }
 }

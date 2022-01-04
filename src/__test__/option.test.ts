@@ -25,7 +25,7 @@ describe('option type', () => {
 
   it('unwraps a nested option value', () => {
     const divideByFour = divideBy(4)
-    const five = Option(20).flatMap(divideByFour).value
+    const five = Option(20).map(divideByFour).value
     expect(five).toBe(5)
   })
 
@@ -37,7 +37,7 @@ describe('option type', () => {
 
   it('maintains type through the chain', () => {
     const arr = Option([1, 2, 3, 3])
-    const result = arr.flatMap(toSet).flatMap(toArray).value
-    expect(result).toStrictEqual([1, 2, 3])
+    const result = arr.map(toSet).value
+    expect(result).toStrictEqual(new Set([1, 2, 3]))
   })
 })
