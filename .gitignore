@@ -75,4 +75,5 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# Ignore in git, but include in publish
 lib
