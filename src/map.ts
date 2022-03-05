@@ -1,6 +1,8 @@
-import { Some } from './some'
-export function map<T>(x: NonNullable<T>) {
-  return <U>(fn: (x: T) => NonNullable<U>) => {
-    return Some(fn(x))
+import { Option } from './option'
+import type { Pipeline } from './types'
+
+export function map<T>(x: T) {
+  return <U>(fn: (x: NonNullable<T>) => U): Pipeline<U> => {
+    return Option(fn(x as NonNullable<T>))
   }
 }

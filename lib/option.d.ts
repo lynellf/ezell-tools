@@ -1,3 +1,3 @@
-import type { Option as TOption } from './types';
-export declare function Option<T>(x: T): TOption<T>;
+import type { Pipeline } from './types';
+export declare function Option<T>(x: T): Pipeline<T>;
 //# sourceMappingURL=option.d.ts.map

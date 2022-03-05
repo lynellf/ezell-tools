@@ -1,6 +1,4 @@
-export { Box } from './box'
+export { Pipeline } from './pipeline'
 export { Option } from './option'
 export { Some } from './some'
 export { None } from './none'
-export { tap } from './tap'
-export { map } from './map'
