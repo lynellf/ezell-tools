@@ -1,3 +1,3 @@
-import type { Some as TSome } from './types';
-export declare function Some<T>(x: NonNullable<T>): TSome<T>;
+import type { Pipeline } from './types';
+export declare function Some<T>(x: T): Pipeline<T>;
 //# sourceMappingURL=some.d.ts.map
