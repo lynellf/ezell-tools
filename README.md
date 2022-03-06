@@ -82,3 +82,9 @@ interface Pipeline<T> {
 ```
 
 `Pipeline` is an alias for `Some`
+
+### Usage
+
+```
+npm install ezell-toolbelt
+```
